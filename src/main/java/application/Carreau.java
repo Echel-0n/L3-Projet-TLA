@@ -1,4 +1,4 @@
-package tla;
+package application;
 
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
@@ -10,12 +10,14 @@ Gère l'affichage d'un carreau, cf. EtatCarreau pour les différents états poss
 class Carreau {
     private EtatCarreau etat;
     private ImageView imageView = new ImageView();
+    private int id;
 
     Carreau(int x, int y, Pane parent) {
         setEtat(EtatCarreau.VIDE);
-        imageView.setTranslateX(x * Plateau.LARGEUR_CARREAU);
-        imageView.setTranslateY(y * Plateau.LARGEUR_CARREAU);
-        Tooltip.install(imageView, new Tooltip("(" + x + ", " + y + ")"));
+        id=-1;
+        imageView.setTranslateX((x-1) * Plateau.LARGEUR_CARREAU);
+        imageView.setTranslateY((y-1) * Plateau.LARGEUR_CARREAU);
+        Tooltip.install(imageView, new Tooltip("( X=" + x + ", Y=" + y + ")"));
         parent.getChildren().add(imageView);
     }
 
@@ -46,11 +48,38 @@ class Carreau {
                 imageView.setImage(LibrairieImages.imgSortie);
                 imageView.setViewOrder(20);
                 break;
+            case ENTREE_TRAPPE_HAUT:
+                imageView.setImage(LibrairieImages.imgTrappeOuverte);
+                imageView.setViewOrder(15);
+                break;
+            case ENTREE_TRAPPE_DROITE:
+                imageView.setImage(LibrairieImages.imgTrappeOuverte);
+                imageView.setRotate(90);
+                imageView.setViewOrder(15);
+                break;
+            case ENTREE_TRAPPE_BAS:
+                imageView.setImage(LibrairieImages.imgTrappeOuverte);
+                imageView.setRotate(180);
+                imageView.setViewOrder(15);
+                break;
+            case ENTREE_TRAPPE_GAUCHE:
+                imageView.setImage(LibrairieImages.imgTrappeOuverte);
+                imageView.setRotate(270);
+                imageView.setViewOrder(15);
+                break;
+            case SORTIE_TRAPPE:
+                imageView.setImage(LibrairieImages.imgTrappeFermee);
+                imageView.setViewOrder(10);
+                break;
         }
     }
 
     EtatCarreau getEtat() {
         return etat;
     }
+
+	public int getId() {
+		return id;
+	}
 
 }
